@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Class | GBM High School</title>
+
+<style>
+:root {
+    --primary: #0f766e;     /* Teal */
+    --secondary: #0b3c5d;   /* Navy */
+    --accent: #f59e0b;      /* Orange */
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Background */
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(240,247,246,0.78),
+            rgba(240,247,246,0.78)
+        ),
+        url("https://images.unsplash.com/photo-1580582932707-520aed937b7b");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 25px 40px;
+}
+
+header h1 {
+    font-size: 26px;
+}
+
+header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Navbar */
+nav {
+    background-color: var(--secondary);
+    padding: 12px 40px;
+}
+
+nav a {
+    color: white;
+    margin-right: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #fef3c7;
+    text-decoration: underline;
+}
+
+/* Content */
+.content {
+    padding: 60px 40px;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.96);
+    padding: 35px;
+    max-width: 480px;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+.card h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Form */
+label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 18px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary), #14b8a6);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>GBM HIGH SCHOOL</h1>
+    <p>Select Class</p>
+</header>
+
+<nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+
+<div class="content">
+    <div class="card">
+        <h2>Select Class & Division</h2>
+
+        <form method="POST">
+            <label>Standard</label>
+            <select name="standard" required>
+                <option value="">-- Select Standard --</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+
+            <label>Division</label>
+            <select name="division" required>
+                <option value="">-- Select Division --</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+
+            <button type="submit">Proceed</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

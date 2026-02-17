@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weekly Defaulters | GBM High School</title>
+
+<style>
+:root {
+    --primary: #0f766e;
+    --secondary: #0b3c5d;
+    --danger: #dc2626;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(240,247,246,0.85), rgba(240,247,246,0.85)),
+        url("https://images.unsplash.com/photo-1523240795612-9a054b0db644");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 25px 40px;
+}
+
+nav {
+    background-color: var(--secondary);
+    padding: 12px 40px;
+}
+
+nav a {
+    color: white;
+    margin-right: 25px;
+    text-decoration: none;
+}
+
+/* Content */
+.content {
+    padding: 50px 40px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.97);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+}
+
+/* Form */
+form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+select, button {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: var(--primary);
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f0fdfa;
+}
+
+.bad {
+    color: var(--danger);
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>GBM HIGH SCHOOL</h1>
+    <p>Weekly Defaulters (Below 75%)</p>
+</header>
+
+<nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+
+<div class="content">
+
+<div class="card">
+    <h2>Weekly Defaulters</h2>
+
+    <form method="POST">
+        <select name="standard" required>
+            <option value="">Select Standard</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+
+        <select name="division" required>
+            <option value="">Select Division</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+
+        <button type="submit">Show Defaulters</button>
+    </form>
+
+    {% if defaulters %}
+    <table>
+        <tr>
+            <th>Roll</th>
+            <th>Name</th>
+            <th>Attendance %</th>
+        </tr>
+
+        {% for d in defaulters %}
+        <tr>
+            <td>{{ d.roll }}</td>
+            <td>{{ d.name }}</td>
+            <td class="bad">{{ d.percentage }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- ✅ EXPORT BUTTON GOES HERE (JUST BELOW TABLE) -->
+    <form method="POST" action="{{ url_for('export_weekly_defaulters') }}">
+        <input type="hidden" name="standard" value="{{ standard }}">
+        <input type="hidden" name="division" value="{{ division }}">
+        <button type="submit" class="button">
+            Export Defaulters to Excel
+        </button>
+    </form>
+
+{% elif defaulters is not none %}
+    <p>No defaulters 🎉</p>
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>

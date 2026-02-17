@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GBM High School</title>
+
+<style>
+:root {
+    --primary: #0f766e;     /* Teal */
+    --secondary: #0b3c5d;   /* Navy */
+    --accent: #f59e0b;      /* Orange */
+    --card: #ffffff;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Page background image */
+body {
+    min-height: 100vh;
+    background:
+    linear-gradient(
+        rgba(240,247,246,0.80),
+        rgba(240,247,246,0.80)
+    ),
+    url("https://images.unsplash.com/photo-1588072432836-e10032774350");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 45px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+header p {
+    margin-top: 8px;
+    font-size: 15px;
+    opacity: 0.95;
+}
+
+/* Navbar */
+nav {
+    background-color: var(--secondary);
+    padding: 12px 40px;
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    padding-bottom: 4px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+nav a:hover,
+nav a.active {
+    border-bottom: 2px solid var(--accent);
+    color: #fef3c7;
+    font-weight: bold;
+}
+
+/* Content */
+.content {
+    padding: 50px 40px;
+}
+
+.section {
+    display: none;
+    animation: fade 0.4s ease-in-out;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin-top: 25px;
+    color: var(--secondary);
+}
+
+/* Home Layout */
+.main {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Card style */
+.welcome,
+.login-box {
+    background: rgba(255,255,255,0.96);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+}
+
+.welcome {
+    flex: 2;
+}
+
+/* Notice Board */
+.notice {
+    margin-top: 25px;
+    background: #ecfeff;
+    padding: 20px;
+    border-left: 6px solid var(--accent);
+    border-radius: 6px;
+}
+
+.notice ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.notice li {
+    margin-bottom: 8px;
+}
+
+/* Login Box */
+.login-box {
+    flex: 1;
+    height: fit-content;
+}
+
+.login-box h3 {
+    margin-bottom: 15px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    border: none;
+    color: white;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* Lists */
+ul {
+    margin-left: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary);
+    color: #e5f6f5;
+    text-align: center;
+    padding: 15px;
+    font-size: 13px;
+    margin-top: 40px;
+}
+</style>
+
+<script>
+function showSection(id, element) {
+    let sections = document.getElementsByClassName("section");
+    for (let i = 0; i < sections.length; i++) {
+        sections[i].style.display = "none";
+    }
+    document.getElementById(id).style.display = "block";
+
+    let links = document.querySelectorAll("nav a");
+    links.forEach(link => link.classList.remove("active"));
+    if (element) element.classList.add("active");
+}
+</script>
+</head>
+
+<body onload="showSection('home')">
+
+<header>
+    <h1>GBM HIGH SCHOOL</h1>
+    <p>Knowledge • Discipline • Excellence</p>
+</header>
+
+<nav>
+    <a onclick="showSection('home', this)" class="active">Home</a>
+    <a onclick="showSection('about', this)">About Us</a>
+    <a onclick="showSection('academics', this)">Academics</a>
+    <a onclick="showSection('contact', this)">Contact</a>
+</nav>
+
+<div class="content">
+
+<!-- HOME -->
+<div id="home" class="section">
+    <div class="main">
+        <div class="welcome">
+            <h2>Welcome to GBM High School</h2>
+            <p>
+                GBM High School is a center of academic excellence dedicated to
+                shaping young minds through quality education, discipline,
+                and moral values.
+            </p>
+
+            <div class="notice">
+                <strong>📢 Notice Board</strong>
+                <ul>
+                    <li>Unit Test starts from 10th March</li>
+                    <li>Parent-Teacher Meeting on 15th March</li>
+                    <li>Annual Sports Day on 25th March</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="login-box">
+            <h3>Teacher Login</h3>
+            <button onclick="window.location.href='/login'">
+                Login to Attendance System
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+    <div class="welcome">
+        <h2>About Us</h2>
+        <p>
+            GBM High School was established with the aim of providing
+            affordable and quality education to students.
+        </p>
+
+        <h3>Our Mission</h3>
+        <p>
+            To empower students with knowledge, skills, and values
+            required to succeed in life.
+        </p>
+
+        <h3>Our Vision</h3>
+        <p>
+            To be a leading educational institution that nurtures
+            responsible citizens and future leaders.
+        </p>
+    </div>
+</div>
+
+<!-- ACADEMICS -->
+<div id="academics" class="section">
+    <div class="welcome">
+        <h2>Academics</h2>
+
+        <h3>Classes Offered</h3>
+        <p>Grades 8, 9, and 10 (State Board Curriculum)</p>
+
+        <h3>Subjects</h3>
+        <ul>
+            <li>Mathematics</li>
+            <li>Science</li>
+            <li>English</li>
+            <li>Social Studies</li>
+            <li>Computer Science</li>
+        </ul>
+
+        <h3>Evaluation System</h3>
+        <p>
+            Continuous assessment through unit tests,
+            assignments, and final examinations.
+        </p>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section">
+    <div class="welcome">
+        <h2>Contact Us</h2>
+        <p>
+            📍 Address: GBM High School, Main Road, City<br><br>
+            📞 Phone: +91 98765 43210<br><br>
+            📧 Email: gbmhighschool@email.com
+        </p>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    © 2026 GBM High School | All Rights Reserved
+</footer>
+
+</body>
+</html>

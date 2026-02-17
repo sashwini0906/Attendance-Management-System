@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mark Attendance | GBM High School</title>
+
+<style>
+:root {
+    --primary: #0f766e;
+    --secondary: #0b3c5d;
+    --accent: #f59e0b;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Background */
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(240,247,246,0.78),
+            rgba(240,247,246,0.78)
+        ),
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 25px 40px;
+}
+
+header h1 {
+    font-size: 26px;
+}
+
+header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Content */
+.content {
+    padding: 40px;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.96);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background: var(--secondary);
+    color: white;
+}
+
+/* Row status */
+.present {
+    background-color: #dcfce7;
+}
+
+.absent {
+    background-color: #fee2e2;
+}
+
+/* Buttons */
+.action-btn {
+    padding: 6px 14px;
+    margin: 2px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.present-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.absent-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* Save Button */
+.save {
+    margin-top: 25px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--primary), #14b8a6);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+</style>
+
+<script>
+function mark(rowId, status) {
+    const row = document.getElementById(rowId);
+    row.className = status;
+    row.querySelector(".status").value = status;
+}
+</script>
+</head>
+
+<body>
+
+<header>
+    <h1>Mark Attendance</h1>
+    <p>Class {{ standard }} - Division {{ division }}</p>
+</header>
+
+<div class="content">
+    <div class="card">
+        <form method="POST">
+            <table>
+                <tr>
+                    <th>Roll</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for s in students %}
+                <tr id="row{{ s.id }}">
+                    <td>{{ s.roll }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>
+                        <input type="hidden" name="status_{{ s.id }}" class="status">
+                        <button type="button"
+                                class="action-btn present-btn"
+                                onclick="mark('row{{ s.id }}','present')">
+                            Present
+                        </button>
+                        <button type="button"
+                                class="action-btn absent-btn"
+                                onclick="mark('row{{ s.id }}','absent')">
+                            Absent
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <button class="save">Save Attendance</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

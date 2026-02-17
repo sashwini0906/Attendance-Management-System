@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>View Attendance | GBM High School</title>
+
+<style>
+:root {
+    --primary: #0f766e;
+    --secondary: #0b3c5d;
+    --accent: #f59e0b;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Background */
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(240,247,246,0.78),
+            rgba(240,247,246,0.78)
+        ),
+        url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 25px 40px;
+}
+
+header h1 {
+    font-size: 26px;
+}
+
+header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Content */
+.content {
+    padding: 50px 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.96);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+/* Form */
+form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+form input,
+form select {
+    padding: 10px;
+    margin-right: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+form button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary), #14b8a6);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* Summary */
+.summary {
+    margin: 15px 0 25px;
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background: var(--secondary);
+    color: white;
+}
+
+/* Status */
+.Present {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.Absent {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Back link */
+.back {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>GBM HIGH SCHOOL</h1>
+    <p>View Attendance Records</p>
+</header>
+
+<div class="content">
+
+    <div class="card">
+        <h2>View Past Attendance</h2>
+
+        <form method="POST">
+            <label>Date</label>
+            <input type="date" name="date" value="{{ date_selected }}">
+
+            <label>Standard</label>
+            <select name="standard" required>
+                <option value="8" {% if standard_selected == "8" %}selected{% endif %}>8</option>
+<option value="9" {% if standard_selected == '9' %}selected{% endif %}>9</option>
+<option value="10" {% if standard_selected == '10' %}selected{% endif %}>10</option>
+
+            </select>
+
+            <label>Division</label>
+            <select name="division" required>
+               <option value="A" {% if division_selected == 'A' %}selected{% endif %}>A</option>
+<option value="B" {% if division_selected == 'B' %}selected{% endif %}>B</option>
+<option value="C" {% if division_selected == 'C' %}selected{% endif %}>C</option>
+
+            </select>
+
+            <button type="submit">View Attendance</button>
+        </form>
+    </div>
+
+    {% if records is not none %}
+
+   <div class="summary">
+    Total: {{ summary.total }} |
+    Present: {{ summary.present }} |
+    Absent: {{ summary.absent }}
+</div>
+
+<form method="POST" action="{{ url_for('export_attendance') }}">
+    <input type="hidden" name="date" value="{{ date_selected }}">
+    <input type="hidden" name="standard" value="{{ standard_selected }}">
+    <input type="hidden" name="division" value="{{ division_selected }}">
+
+    <button type="submit" style="margin-bottom: 15px;">
+        Export to Excel
+    </button>
+</form>
+
+
+        <table>
+            <tr>
+                <th>Roll</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+
+            {% for r in records %}
+            <tr>
+                <td>{{ r.roll }}</td>
+                <td>{{ r.name }}</td>
+                <td class="{{ r.status }}">{{ r.status }}</td>
+            </tr>
+            {% endfor %}
+			
+			{% if records|length == 0 %}
+                  <tr>
+                       <td colspan="3">No attendance found for selected date.</td>
+                  </tr>
+            {% endif %}
+
+        </table>
+
+        <a href="{{ url_for('dashboard') }}" class="back">
+            ⬅ Back to Dashboard
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

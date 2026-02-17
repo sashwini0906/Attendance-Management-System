@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Login | GBM High School</title>
+
+<style>
+:root {
+    --primary: #0f766e;     /* Teal */
+    --secondary: #0b3c5d;   /* Navy */
+    --accent: #f59e0b;
+    --card: #ffffff;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Page background with image */
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(11,60,93,0.65),
+            rgba(15,118,110,0.65)
+        ),
+        url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 30px 40px;
+}
+
+header h1 {
+    font-size: 26px;
+}
+
+header p {
+    font-size: 14px;
+    opacity: 0.95;
+}
+
+/* Center container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 90px);
+}
+
+/* Login box */
+.login-box {
+    background: rgba(255,255,255,0.97);
+    padding: 40px;
+    width: 360px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.login-box h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Inputs */
+.login-box input {
+    width: 100%;
+    padding: 11px;
+    margin-bottom: 18px;
+    border: 1px solid #cfd8dc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Button */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary), #14b8a6);
+    border: none;
+    color: white;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+
+/* Error message */
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 12px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>GBM HIGH SCHOOL</h1>
+    <p>Teacher Login Portal</p>
+</header>
+
+<div class="container">
+    <div class="login-box">
+        <h2>Teacher Login</h2>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
