@@ -1,0 +1,24 @@
+{% extends "base_teacher.html" %}
+{% block title %}Student List – Class {{ standard }}{{ division }}{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="{{ url_for('dashboard') }}">Dashboard</a> →
+    Class {{ standard }}{{ division }} – Student List
+</div>
+{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Students – Class {{ standard }}{{ division }}</h2>
+    <table>
+        <thead><tr><th>Roll No</th><th>Name</th></tr></thead>
+        <tbody>
+        {% for s in students %}
+        <tr><td>{{ s.roll }}</td><td>{{ s.name }}</td></tr>
+        {% else %}
+        <tr><td colspan="2" style="text-align: center; padding: 30px;">No students found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="margin-top: 20px;">← Back to Dashboard</a>
+</div>
+{% endblock %}

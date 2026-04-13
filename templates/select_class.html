@@ -1,0 +1,32 @@
+{% extends "base_teacher.html" %}
+{% block title %}Select Class{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb"><a href="{{ url_for('dashboard') }}">Dashboard</a> → Mark Attendance → Select Class</div>
+{% endblock %}
+{% block content %}
+<div class="card" style="max-width: 420px;">
+    <h2>Select Class & Division</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label>Standard</label>
+            <select name="standard" required>
+                <option value="">-- Select Standard --</option>
+                {% for i in range(1, 13) %}
+                <option value="{{ i }}">Class {{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Division</label>
+            <select name="division" required>
+                <option value="">-- Select Division --</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+            </select>
+        </div>
+        <button type="submit" class="btn">Proceed to Mark Attendance</button>
+    </form>
+</div>
+{% endblock %}

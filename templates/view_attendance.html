@@ -1,0 +1,72 @@
+{% extends "base_teacher.html" %}
+{% block title %}View Attendance{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb"><a href="{{ url_for('dashboard') }}">Dashboard</a> → View Attendance Records</div>
+{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>View Past Attendance</h2>
+    <form method="POST" class="form-row" style="align-items: flex-end;">
+        <div class="form-group" style="min-width: 150px;">
+            <label>Date</label>
+            <input type="date" name="date" value="{{ date_selected or '' }}">
+        </div>
+        <div class="form-group" style="min-width: 120px;">
+            <label>Standard</label>
+            <select name="standard" required>
+                <option value="">Select</option>
+                {% for i in range(1, 13) %}
+                <option value="{{ i }}" {% if standard_selected == (i|string) %}selected{% endif %}>Class {{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group" style="min-width: 100px;">
+            <label>Division</label>
+            <select name="division" required>
+                <option value="">Select</option>
+                {% for d in ['A','B','C','D'] %}
+                <option value="{{ d }}" {% if division_selected == d %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn">View</button>
+        </div>
+    </form>
+</div>
+{% if date_selected is not none %}
+<div class="card">
+    {% if summary %}
+    <div class="summary-bar">
+        <span><strong>Total:</strong> {{ summary.total }}</span>
+        <span style="color: var(--success);"><strong>Present:</strong> {{ summary.present }}</span>
+        <span style="color: var(--danger);"><strong>Absent:</strong> {{ summary.absent }}</span>
+    </div>
+    <form method="POST" action="{{ url_for('export_attendance') }}" style="margin: 15px 0;">
+        <input type="hidden" name="date" value="{{ date_selected }}">
+        <input type="hidden" name="standard" value="{{ standard_selected }}">
+        <input type="hidden" name="division" value="{{ division_selected }}">
+        <button type="submit" class="btn btn-secondary">Export to Excel</button>
+    </form>
+    {% endif %}
+    <table>
+        <thead><tr><th>Roll</th><th>Name</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for r in records %}
+        <tr>
+            <td>{{ r.roll }}</td>
+            <td>{{ r.name }}</td>
+            <td><span style="color: {% if r.status == 'present' %}var(--success){% else %}var(--danger){% endif %}; font-weight: 600;">{{ r.status|capitalize }}</span></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" style="text-align: center; padding: 30px;">No attendance found for selected date.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="margin-top: 20px;">← Back to Dashboard</a>
+</div>
+{% endif %}
+{% endblock %}
+{% block extra_css %}
+.summary-bar { display: flex; gap: 25px; padding: 12px 0; font-size: 14px; }
+{% endblock %}

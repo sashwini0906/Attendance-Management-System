@@ -1,0 +1,79 @@
+{% extends "base_teacher.html" %}
+{% block title %}Mark Attendance – Class {{ standard }}{{ division }}{% endblock %}
+{% block header_subtitle %}Class {{ standard }}{{ division }} | Mark Attendance{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="{{ url_for('dashboard') }}">Dashboard</a> →
+    <a href="{{ url_for('select_class') }}">Select Class</a> →
+    Class {{ standard }}{{ division }}
+</div>
+{% endblock %}
+{% block content %}
+{% if add_msg %}<div class="alert alert-success">{{ add_msg }}</div>{% endif %}
+{% if not students %}
+<div class="card">
+    <h2>No students in this class</h2>
+    <p>Add students below to start marking attendance.</p>
+    <form method="POST" action="{{ url_for('add_students_in_mark', standard=standard, division=division) }}" style="margin-top: 20px;">
+        <div class="form-group">
+            <label>Students (one per line: Roll, Name)</label>
+            <textarea name="students_text" rows="6" placeholder="1, John Doe&#10;2, Jane Smith&#10;3, Bob Wilson" required style="font-family: monospace;"></textarea>
+        </div>
+        <button type="submit" class="btn">Add Students</button>
+    </form>
+</div>
+{% else %}
+<div class="card">
+    <h2>Mark Attendance – Class {{ standard }}{{ division }}</h2>
+    <a href="{{ url_for('student_list', standard=standard, division=division) }}" class="btn btn-secondary" style="margin-bottom: 15px;">View Student List</a>
+    <form method="POST">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Roll</th><th>Name</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                {% for s in students %}
+                <tr id="row{{ s.id }}">
+                    <td>{{ s.roll }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>
+                        <input type="hidden" name="status_{{ s.id }}" class="status">
+                        <button type="button" class="btn btn-sm present-btn" onclick="mark('row{{ s.id }}','present')">Present</button>
+                        <button type="button" class="btn btn-sm absent-btn" onclick="mark('row{{ s.id }}','absent')">Absent</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button type="submit" class="btn" style="margin-top: 20px;">Save Attendance</button>
+    </form>
+</div>
+<div class="card">
+    <h3>Add more students</h3>
+    <form method="POST" action="{{ url_for('add_students_in_mark', standard=standard, division=division) }}">
+        <div class="form-group">
+            <textarea name="students_text" rows="3" placeholder="31, New Student&#10;32, Another Student" style="font-family: monospace;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-secondary">Add Students</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}
+{% block extra_css %}
+.present-btn { background: var(--success) !important; padding: 6px 14px; font-size: 13px; margin-right: 6px; }
+.absent-btn { background: var(--danger) !important; padding: 6px 14px; font-size: 13px; }
+tr.present { background: #dcfce7 !important; }
+tr.absent { background: #fee2e2 !important; }
+.table-wrap { overflow-x: auto; margin: 15px 0; }
+{% endblock %}
+{% block scripts %}
+<script>
+function mark(rowId, status) {
+    const row = document.getElementById(rowId);
+    row.className = status;
+    row.querySelector(".status").value = status;
+}
+</script>
+{% endblock %}

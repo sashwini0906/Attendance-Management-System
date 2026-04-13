@@ -1,0 +1,32 @@
+{% extends "base_teacher.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb">Dashboard</div>
+{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ 'info' if category == 'info' else 'success' }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="card">
+    <h2>Welcome 👋</h2>
+    <p>{{ session.get('teacher_name', 'Teacher') }}{% if session.get('teacher_subject') %} – {{ session.get('teacher_subject') }} Teacher{% endif %}</p>
+    <p style="margin-top: 10px; color: #64748b;">Use the options below to manage attendance efficiently.</p>
+</div>
+<div class="card">
+    <h2>Quick Actions</h2>
+    <div class="action-grid">
+        <a href="{{ url_for('add_students') }}" class="btn">Add Students</a>
+        <a href="{{ url_for('select_class') }}" class="btn">Mark Today's Attendance</a>
+        <a href="{{ url_for('view_attendance') }}" class="btn">View Attendance Records</a>
+        <a href="{{ url_for('weekly_defaulters') }}" class="btn">Weekly Defaulters (75%)</a>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+.action-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.action-grid .btn { margin: 0; }
+{% endblock %}

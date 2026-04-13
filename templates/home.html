@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}GBM High School{% endblock %}
+{% block header_subtitle %}Knowledge • Discipline • Excellence{% endblock %}
+{% block header_right %}
+    <a href="{{ url_for('login') }}" class="btn-outline">Staff Login</a>
+{% endblock %}
+{% block nav %}
+<nav>
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#academics">Academics</a>
+    <a href="#contact">Contact</a>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="main-layout">
+    <div class="card welcome-card">
+        <h2>Welcome to GBM High School</h2>
+        <p>We are dedicated to shaping young minds through quality education, discipline, and moral values.</p>
+        <div class="notice-box">
+            <strong>📢 Notice Board</strong>
+            <ul>
+                <li>Unit Test starts from 10th March</li>
+                <li>Parent-Teacher Meeting on 15th March</li>
+                <li>Annual Sports Day on 25th March</li>
+            </ul>
+        </div>
+    </div>
+    <div class="card login-card">
+        <h3>Staff Login</h3>
+        <p style="margin-bottom: 20px; font-size: 14px; color: #64748b;">Teachers and administrators can access the attendance system here.</p>
+        <a href="{{ url_for('login') }}" class="btn" style="display: block; text-align: center;">Login to Attendance System</a>
+    </div>
+</div>
+<div class="card" id="about">
+    <h2>About Us</h2>
+    <p>GBM High School was established with the aim of providing affordable and quality education to students.</p>
+    <h3>Our Mission</h3>
+    <p>To empower students with knowledge, skills, and values required to succeed in life.</p>
+    <h3>Our Vision</h3>
+    <p>To be a leading educational institution that nurtures responsible citizens and future leaders.</p>
+</div>
+<div class="card" id="academics">
+    <h2>Academics</h2>
+    <h3>Classes Offered</h3>
+    <p>Grades 1–12 (State Board Curriculum)</p>
+    <h3>Subjects</h3>
+    <ul style="margin-left: 20px; margin-top: 8px;">
+        <li>Mathematics, Science, English</li>
+        <li>Social Studies, Computer Science</li>
+    </ul>
+</div>
+<div class="card" id="contact">
+    <h2>Contact Us</h2>
+    <p>📍 GBM High School, Main Road, City<br>
+    📞 +91 98765 43210 &nbsp;|&nbsp; 📧 gbmhighschool@email.com</p>
+</div>
+{% endblock %}
+{% block extra_css %}
+.main-layout { display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 30px; }
+.welcome-card { flex: 2; min-width: 300px; }
+.login-card { flex: 1; min-width: 280px; max-height: fit-content; }
+.notice-box { margin-top: 20px; padding: 16px; background: #ecfeff; border-left: 4px solid var(--accent); border-radius: 6px; }
+.notice-box ul { margin-top: 10px; padding-left: 20px; }
+.notice-box li { margin-bottom: 6px; }
+{% endblock %}

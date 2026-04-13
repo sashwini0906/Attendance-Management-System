@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block header_subtitle %}Admin Portal{% endblock %}
+{% block header_right %}
+    <span>{{ session.get('admin_username', 'Admin') }}</span>
+    <a href="{{ url_for('admin_logout') }}" class="btn-outline">Logout</a>
+{% endblock %}
+{% block nav %}
+<nav>
+    <a href="{{ url_for('admin_dashboard') }}" {% if request.endpoint == 'admin_dashboard' %}class="active"{% endif %}>Dashboard</a>
+    <a href="{{ url_for('add_teacher') }}" {% if request.endpoint == 'add_teacher' %}class="active"{% endif %}>Add Teacher</a>
+</nav>
+{% endblock %}
