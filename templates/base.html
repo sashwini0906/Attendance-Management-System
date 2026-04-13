@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GBM High School{% endblock %} | Attendance System</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --secondary: #0b3c5d;
+            --accent: #f59e0b;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --card: #ffffff;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", system-ui, sans-serif;
+        }
+        html, body {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(240,247,246,0.88), rgba(240,247,246,0.88)),
+                url("https://images.unsplash.com/photo-1523240795612-9a054b0db644");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            animation: fadeBg 0.6s ease-out;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        header a { color: white; text-decoration: none; }
+        header h1 {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: "Segoe UI Semibold", "Segoe UI", system-ui, sans-serif;
+        }
+        header .subtitle { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .header-right a, .header-right span {
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+        }
+        .header-right a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+        .header-right .btn-outline {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        nav {
+            background: var(--secondary);
+            padding: 10px 40px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.5);
+            position: sticky;
+            top: 64px;
+            z-index: 15;
+        }
+        nav a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+        }
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 6px;
+            height: 2px;
+            background: rgba(248,250,252,0.9);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.2s ease-out;
+        }
+        nav a:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            transform: translateY(-1px);
+        }
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+        nav a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 500; }
+        main { flex: 1; padding: 35px 40px; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .card {
+            background: rgba(255,255,255,0.97);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(15,23,42,0.08);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(6px);
+            opacity: 0;
+            animation: cardIn 0.35s ease-out forwards;
+        }
+        .card h2 { color: var(--primary); margin-bottom: 16px; font-size: 1.25rem; }
+        .card h3 { color: var(--secondary); margin: 20px 0 10px; font-size: 1rem; }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), #14b8a6);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+        }
+        .btn:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 6px 16px rgba(15,118,110,0.4);
+            filter: brightness(1.03);
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 999px;
+        }
+        .btn-secondary { background: #64748b; }
+        .btn-secondary:hover { box-shadow: 0 4px 12px rgba(100,116,139,0.35); }
+        .btn-danger { background: var(--danger); }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 14px; color: var(--secondary); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15,118,110,0.15);
+        }
+        .form-row { display: flex; gap: 16px; flex-wrap: wrap; }
+        .form-row .form-group { flex: 1; min-width: 140px; }
+        .alert { padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; }
+        .alert-info { background: #e0f2fe; color: #0369a1; border-left: 4px solid var(--primary); }
+        .alert-success { background: #dcfce7; color: var(--success); }
+        .alert-error { background: #fee2e2; color: var(--danger); }
+        .breadcrumb { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        footer {
+            background: var(--secondary);
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 14px;
+            font-size: 13px;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; transition: background 0.15s ease; }
+        th { background: var(--secondary); color: white; font-weight: 600; }
+        tr:hover { background: #f8fafc; }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.99);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        @keyframes fadeBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}">
+            <h1>GBM High School</h1>
+            <p class="subtitle">{% block header_subtitle %}Knowledge • Discipline • Excellence{% endblock %}</p>
+        </a>
+        <div class="header-right">
+            {% block header_right %}{% endblock %}
+        </div>
+    </header>
+    {% block nav %}{% endblock %}
+    <main>
+        {% block breadcrumb %}{% endblock %}
+        {% block content %}{% endblock %}
+    </main>
+    {% block footer %}
+    <footer>© 2026 GBM High School | Attendance Management System</footer>
+    {% endblock %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

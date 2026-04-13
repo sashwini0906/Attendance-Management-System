@@ -1,47 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student List</title>
-    <style>
-        body { font-family: Arial; background:#f4f6f9; padding:40px; }
-        h2 { color:#0b5394; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th { background:#0b5394; color:white; }
-    </style>
-</head>
-<body>
-
-<h2>Students – Class {{ standard }} {{ division }}</h2>
-
-<table>
-    <tr>
-        <th>Roll No</th>
-        <th>Name</th>
-    </tr>
-
-    {% for s in students %}
-    <tr>
-        <td>{{ s.roll }}</td>
-        <td>{{ s.name }}</td>
-    </tr>
-    {% else %}
-    <tr>
-        <td colspan="2">No students found</td>
-    </tr>
-    {% endfor %}
-</table>
-
-<br>
-<a href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
-
-</body>
-</html>
+{% extends "base_teacher.html" %}
+{% block title %}Student List – Class {{ standard }}{{ division }}{% endblock %}
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="{{ url_for('dashboard') }}">Dashboard</a> →
+    Class {{ standard }}{{ division }} – Student List
+</div>
+{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Students – Class {{ standard }}{{ division }}</h2>
+    <table>
+        <thead><tr><th>Roll No</th><th>Name</th></tr></thead>
+        <tbody>
+        {% for s in students %}
+        <tr><td>{{ s.roll }}</td><td>{{ s.name }}</td></tr>
+        {% else %}
+        <tr><td colspan="2" style="text-align: center; padding: 30px;">No students found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="margin-top: 20px;">← Back to Dashboard</a>
+</div>
+{% endblock %}

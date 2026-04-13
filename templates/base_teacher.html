@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block header_subtitle %}Teacher Portal{% endblock %}
+{% block header_right %}
+    <span>{{ session.get('teacher_name', 'Teacher') }}{% if session.get('teacher_subject') %} ({{ session.get('teacher_subject') }}){% endif %}</span>
+    <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+{% endblock %}
+{% block nav %}
+<nav>
+    <a href="{{ url_for('dashboard') }}" {% if request.endpoint == 'dashboard' %}class="active"{% endif %}>Dashboard</a>
+    <a href="{{ url_for('add_students') }}" {% if request.endpoint == 'add_students' %}class="active"{% endif %}>Add Students</a>
+    <a href="{{ url_for('select_class') }}" {% if request.endpoint in ['select_class','mark_attendance'] %}class="active"{% endif %}>Mark Attendance</a>
+    <a href="{{ url_for('view_attendance') }}" {% if request.endpoint == 'view_attendance' %}class="active"{% endif %}>View Records</a>
+    <a href="{{ url_for('weekly_defaulters') }}" {% if request.endpoint == 'weekly_defaulters' %}class="active"{% endif %}>Weekly Defaulters</a>
+</nav>
+{% endblock %}
