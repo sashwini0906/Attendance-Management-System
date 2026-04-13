@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import mysql.connector
 import os
@@ -1146,4 +1145,4 @@ if __name__ == "__main__":
     debug_flag = os.environ.get("FLASK_DEBUG", "1") == "1"
     port = int(os.environ.get("PORT", "5000"))
     app.run(host="0.0.0.0", port=port, debug=debug_flag)
->>>>>>> a741fce4340050b093253c89486b1f4e20183baf
+

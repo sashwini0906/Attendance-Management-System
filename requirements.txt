@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Flask>=2.0.0
 gunicorn>=21.0.0
 mysql-connector-python>=8.0.0
@@ -6,12 +5,3 @@ pandas>=1.0.0
 openpyxl>=3.0.0
 python-dotenv>=1.0.0
 werkzeug>=2.0.0
-=======
-Flask>=2.0.0
-gunicorn>=21.0.0
-mysql-connector-python>=8.0.0
-pandas>=1.0.0
-openpyxl>=3.0.0
-python-dotenv>=1.0.0
-werkzeug>=2.0.0
->>>>>>> a741fce4340050b093253c89486b1f4e20183baf
