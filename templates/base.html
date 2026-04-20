@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}GBM High School{% endblock %} | Attendance System</title>
+    <title>GBM High School| Attendance System</title>
     <style>
         :root {
             --primary: #0f766e;
@@ -202,37 +201,32 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        {% block extra_css %}{% endblock %}
+        
     </style>
 </head>
 <body>
     <header>
         <a href="{{ url_for('home') }}">
             <h1>GBM High School</h1>
-            <p class="subtitle">{% block header_subtitle %}Knowledge • Discipline • Excellence{% endblock %}</p>
+            <p class="subtitle">Knowledge • Discipline • Excellence</p>
         </a>
         <div class="header-right">
-            {% block header_right %}{% endblock %}
+            
         </div>
     </header>
-    {% block nav %}{% endblock %}
+   
     <main>
-        {% block breadcrumb %}{% endblock %}
-        {% block content %}{% endblock %}
+        
     </main>
-    {% block footer %}
     <footer>© 2026 GBM High School | Attendance Management System</footer>
-    {% endblock %}
-    {% block scripts %}{% endblock %}
+    
 </body>
 </html>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}GBM High School{% endblock %} | Attendance System</title>
+    <title>GBM High School | Attendance System</title>
     <style>
         :root {
             --primary: #0f766e;
@@ -430,7 +424,7 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        {% block extra_css %}{% endblock %}
+        
     </style>
 </head>
 <body>
@@ -440,18 +434,13 @@
             <p class="subtitle">{% block header_subtitle %}Knowledge • Discipline • Excellence{% endblock %}</p>
         </a>
         <div class="header-right">
-            {% block header_right %}{% endblock %}
         </div>
     </header>
-    {% block nav %}{% endblock %}
     <main>
-        {% block breadcrumb %}{% endblock %}
-        {% block content %}{% endblock %}
+        
     </main>
-    {% block footer %}
     <footer>© 2026 GBM High School | Attendance Management System</footer>
-    {% endblock %}
-    {% block scripts %}{% endblock %}
+    
 </body>
 </html>
 
