@@ -20,12 +20,14 @@ cursor = None
 try:
     if "MYSQLHOST" in os.environ:
         # Railway deployment
+        port = os.getenv("MYSQLPORT")
+
         db = mysql.connector.connect(
-            host=os.environ.get("MYSQLHOST"),
-            port=int(os.environ.get("MYSQLPORT", 3306)),
-            user=os.environ.get("MYSQLUSER"),
-            password=os.environ.get("MYSQLPASSWORD"),
-            database=os.environ.get("MYSQLDATABASE")
+            host=os.getenv("MYSQLHOST"),
+            port=int(port) if port else 3306,
+            user=os.getenv("MYSQLUSER"),
+            password=os.getenv("MYSQLPASSWORD"),
+            database=os.getenv("MYSQLDATABASE")
         )
     else:
         # Local development
