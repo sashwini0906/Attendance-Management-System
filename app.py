@@ -18,7 +18,7 @@ db = None
 cursor = None
 
 try:
-    if "MYSQL_HOST" in os.environ:
+    if "MYSQLHOST" in os.environ:
         # Railway deployment
         db = mysql.connector.connect(
             host=os.environ.get("MYSQLHOST"),
