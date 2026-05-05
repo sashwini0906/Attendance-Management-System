@@ -18,8 +18,10 @@ db = None
 cursor = None
 
 try:
-    if "MYSQLHOST" in os.environ:
+    if os.getenv("MYSQLHOST"):
         # Railway deployment
+        print("USER:", os.getenv("MYSQLUSER"))
+        print("PASS:", os.getenv("MYSQLPASSWORD"))
         port = os.getenv("MYSQLPORT")
 
         db = mysql.connector.connect(
