@@ -18,28 +18,20 @@ db = None
 cursor = None
 
 try:
-    if os.getenv("MYSQLHOST"):
-        # Railway deployment
-        
-        port = os.getenv("MYSQLPORT")
+    mysql_url = os.getenv("MYSQL_URL")
 
-        db = mysql.connector.connect(
-            host=os.getenv("MYSQLHOST"),
-            port=int(port) if port else 3306,
-            user=os.getenv("MYSQLUSER"),
-            password=os.getenv("MYSQLPASSWORD"),
-            database=os.getenv("MYSQLDATABASE")
-        )
-    else:
-        # Local development
-        db = mysql.connector.connect(
-            host=os.environ.get("DB_HOST", "localhost"),
-            user=os.environ.get("DB_USER", "root"),
-            password=os.environ.get("DB_PASSWORD", ""),
-            database=os.environ.get("DB_NAME", "attendance_db")
-        )
+    db = mysql.connector.connect(
+    option_files=None,
+    host=mysql_url.split("@")[1].split("/")[0].split(":")[0],
+    port=int(mysql_url.split(":")[-1].split("/")[0]),
+    user=mysql_url.split("//")[1].split(":")[0],
+    password=mysql_url.split(":")[2].split("@")[0],
+    database=mysql_url.split("/")[-1]
+    )
 
     cursor = db.cursor(dictionary=True, buffered=True)
+
+    print("✅ Database connected successfully")
     # ---------- CREATE TABLES ----------
 
     cursor.execute("""
