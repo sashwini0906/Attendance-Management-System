@@ -17,15 +17,9 @@
         <option value="">Select</option>
         {% for i in range(1, 13) %}
         <option
-          value="{{ i }}"
-          {%
-          if
-          standard=""
-          ="(i|string)"
-          %}selected{%
-          endif
-          %}
-        >
+            value="{{ i }}"
+            {% if standard == (i|string) %}selected{% endif %}
+>
           Class {{ i }}
         </option>
         {% endfor %}
@@ -36,7 +30,7 @@
       <select name="division" required>
         <option value="">Select</option>
         {% for d in ['A','B','C','D'] %}
-        <option value="{{ d }}" {% if division="" ="d" %}selected{% endif %}>
+        <option value="{{ d }}" {% if division == d %}selected{% endif %}>
           {{ d }}
         </option>
         {% endfor %}
