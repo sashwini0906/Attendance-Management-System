@@ -6,12 +6,12 @@
     <a href="{{ url_for('login') }}" class="btn-outline">Staff Login</a>
 {% endblock %}
 {% block nav %}
-<nav>
+
     <a href="#home" class="active">Home</a>
     <a href="#about">About</a>
     <a href="#academics">Academics</a>
     <a href="#contact">Contact</a>
-</nav>
+
 {% endblock %}
 {% block content %}
 <div class="main-layout">
@@ -58,11 +58,41 @@
 </div>
 {% endblock %}
 {% block extra_css %}
-.main-layout { display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 30px; }
-.welcome-card { flex: 2; min-width: 300px; }
-.login-card { flex: 1; min-width: 280px; max-height: fit-content; }
-.notice-box { margin-top: 20px; padding: 16px; background: #ecfeff; border-left: 4px solid var(--accent); border-radius: 6px; }
-.notice-box ul { margin-top: 10px; padding-left: 20px; }
-.notice-box li { margin-bottom: 6px; }
+<style>
+.main-layout { 
+    display: flex; 
+    gap: 30px; 
+    flex-wrap: wrap; 
+    margin-bottom: 30px; 
+}
+
+.welcome-card { 
+    flex: 2; 
+    min-width: 300px; 
+}
+
+.login-card { 
+    flex: 1; 
+    min-width: 280px; 
+    max-height: fit-content; 
+}
+
+.notice-box { 
+    margin-top: 20px; 
+    padding: 16px; 
+    background: #ecfeff; 
+    border-left: 4px solid var(--accent); 
+    border-radius: 6px; 
+}
+
+.notice-box ul { 
+    margin-top: 10px; 
+    padding-left: 20px; 
+}
+
+.notice-box li { 
+    margin-bottom: 6px; 
+}
+</style>
 {% endblock %}
 
