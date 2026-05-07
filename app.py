@@ -40,6 +40,64 @@ try:
         )
 
     cursor = db.cursor(dictionary=True, buffered=True)
+    # ---------- CREATE TABLES ----------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS teacher (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        full_name VARCHAR(255) NOT NULL,
+        subject VARCHAR(50),
+        standard VARCHAR(20),
+        division VARCHAR(20)
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS admin (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS students (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        roll INT NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        standard VARCHAR(20),
+        division VARCHAR(20)
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS attendance (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        student_id INT,
+        date DATE,
+        status VARCHAR(20),
+        standard VARCHAR(20),
+        division VARCHAR(20)
+    )
+    """)
+
+    db.commit()
+
+    hashed_admin_password = generate_password_hash("admin123")
+    cursor.execute("""
+    INSERT INTO admin (username, password)
+    SELECT * FROM (
+            SELECT 'admin', %s
+    ) AS tmp
+    WHERE NOT EXISTS (
+        SELECT username FROM admin WHERE username='admin'
+    )
+    LIMIT 1
+    """, (hashed_admin_password,))
+    db.commit()
+
 
 except Exception as e:
     print("❌ Database connection failed:", e)
