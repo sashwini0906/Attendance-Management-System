@@ -39,14 +39,57 @@
 </div>
 {% endblock %}
 {% block extra_css %}
-.login-container { display: flex; justify-content: center; align-items: center; min-height: 400px; }
-.login-box { max-width: 380px; width: 100%; }
-.tab-buttons { display: flex; margin-bottom: 24px; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; }
-.tab-btn { flex: 1; padding: 12px; border: none; background: #f1f5f9; color: #64748b; font-size: 14px; cursor: pointer; }
-.tab-btn.active { background: var(--primary); color: white; }
-.login-form { display: none; }
-.login-form.active { display: block; }
-.login-form h3 { margin-bottom: 20px; color: var(--primary); }
+<style>
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.login-box {
+    max-width: 380px;
+    width: 100%;
+}
+
+.tab-buttons {
+    display: flex;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.login-form {
+    display: none;
+}
+
+.login-form.active {
+    display: block;
+}
+
+.login-form h3 {
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+</style>
 {% endblock %}
 {% block scripts %}
 <script>
