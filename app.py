@@ -160,6 +160,7 @@ def login():
 
 #  ADMIN ROUTES 
 
+
 @app.route("/admin-login", methods=["GET", "POST"])
 def admin_login():
     if request.method == "POST":
@@ -173,18 +174,7 @@ def admin_login():
 
         admin = cursor.fetchone()
 
-        is_valid = False
-        if admin:
-            stored_pw = admin["password"]
-            # Support both hashed and legacy plain-text passwords
-            # First try hashed password verification
-            if stored_pw and stored_pw.startswith('pbkdf2:sha256'):
-                is_valid = check_password_hash(stored_pw, password)
-            # Also check plain text for legacy passwords
-            if not is_valid:
-                is_valid = stored_pw == password
-
-        if admin and is_valid:
+        if admin and check_password_hash(admin["password"], password):
             session["admin_id"] = admin["id"]
             session["admin_username"] = admin["username"]
             return redirect(url_for("admin_dashboard"))
