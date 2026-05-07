@@ -13,3 +13,10 @@
     <a href="{{ url_for('weekly_defaulters') }}" {% if request.endpoint == 'weekly_defaulters' %}class="active"{% endif %}>Weekly Defaulters</a>
 </nav>
 {% endblock %}
+
+
+<style>
+{% block extra_css %}{% endblock %}
+</style>
+
+{% block scripts %}{% endblock %}

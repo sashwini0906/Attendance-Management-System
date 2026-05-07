@@ -105,10 +105,17 @@ font-size: 13px; } tr.present { background: #dcfce7 !important; } tr.absent {
 background: #fee2e2 !important; } .table-wrap { overflow-x: auto; margin: 15px
 0; } {% endblock %} {% block scripts %}
 <script>
-  function mark(rowId, status) {
+function mark(rowId, status) {
     const row = document.getElementById(rowId);
-    row.className = status;
+
+    // remove previous colors
+    row.classList.remove("present", "absent");
+
+    // add new color class
+    row.classList.add(status);
+
+    // set hidden input value
     row.querySelector(".status").value = status;
-  }
+}
 </script>
 {% endblock %}
