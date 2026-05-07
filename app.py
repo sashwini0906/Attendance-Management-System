@@ -17,21 +17,27 @@ app.secret_key = os.environ.get("SECRET_KEY", "change-me-in-production")
 db = None
 cursor = None
 
+from urllib.parse import urlparse
+
 try:
     mysql_url = os.getenv("MYSQL_URL")
+
     print("MYSQL_URL =", mysql_url)
+
+    url = urlparse(mysql_url)
+
     db = mysql.connector.connect(
-    option_files=None,
-    host=mysql_url.split("@")[1].split("/")[0].split(":")[0],
-    port=int(mysql_url.split(":")[-1].split("/")[0]),
-    user=mysql_url.split("//")[1].split(":")[0],
-    password=mysql_url.split(":")[2].split("@")[0],
-    database=mysql_url.split("/")[-1]
+        host=url.hostname,
+        port=url.port,
+        user=url.username,
+        password=url.password,
+        database=url.path.replace("/", "")
     )
 
     cursor = db.cursor(dictionary=True, buffered=True)
 
     print("✅ Database connected successfully")
+
     # ---------- CREATE TABLES ----------
 
     cursor.execute("""
@@ -78,22 +84,22 @@ try:
     db.commit()
 
     hashed_admin_password = generate_password_hash("admin123")
+
     cursor.execute("""
     INSERT INTO admin (username, password)
     SELECT * FROM (
-            SELECT 'admin', %s
+        SELECT 'admin', %s
     ) AS tmp
     WHERE NOT EXISTS (
         SELECT username FROM admin WHERE username='admin'
     )
     LIMIT 1
     """, (hashed_admin_password,))
-    db.commit()
 
+    db.commit()
 
 except Exception as e:
     print("❌ Database connection failed:", e)
-
 #  AUTO MIGRATION: Add subject column if missing 
 try:
     cursor.execute("SHOW COLUMNS FROM teacher LIKE 'subject'")
