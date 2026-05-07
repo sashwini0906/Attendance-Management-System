@@ -134,14 +134,14 @@ def login():
         teacher = cursor.fetchone()
 
         is_valid = False
+
         if teacher:
             stored_pw = teacher["password"]
-            # Support both hashed and legacy plain-text passwords
-            # First try hashed password verification
-            if stored_pw and stored_pw.startswith('pbkdf2:sha256'):
+
+            try:
                 is_valid = check_password_hash(stored_pw, password)
-            # Also check plain text for legacy passwords
-            if not is_valid:
+            except:
+        # fallback for old plain-text passwords
                 is_valid = stored_pw == password
 
         if teacher and is_valid:
