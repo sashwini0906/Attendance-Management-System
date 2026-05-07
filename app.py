@@ -19,7 +19,7 @@ cursor = None
 
 try:
     mysql_url = os.getenv("MYSQL_URL")
-
+    print("MYSQL_URL =", mysql_url)
     db = mysql.connector.connect(
     option_files=None,
     host=mysql_url.split("@")[1].split("/")[0].split(":")[0],
