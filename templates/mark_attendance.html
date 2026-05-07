@@ -98,12 +98,12 @@ standard }}{{ division }} | Mark Attendance{% endblock %} {% block breadcrumb %}
     <button type="submit" class="btn btn-secondary">Add Students</button>
   </form>
 </div>
-{% endif %} {% endblock %} {% block extra_css %} .present-btn { background:
+{% endif %} {% endblock %} {% block extra_css %} <style> .present-btn { background:
 var(--success) !important; padding: 6px 14px; font-size: 13px; margin-right:
 6px; } .absent-btn { background: var(--danger) !important; padding: 6px 14px;
-font-size: 13px; } tr.present { background: #dcfce7 !important; } tr.absent {
+font-size: 13px; } tr.present td { background: #dcfce7 !important; } tr.absent td {
 background: #fee2e2 !important; } .table-wrap { overflow-x: auto; margin: 15px
-0; } {% endblock %} {% block scripts %}
+0; } </style>{% endblock %} {% block scripts %}
 <script>
 function mark(rowId, status) {
     const row = document.getElementById(rowId);
