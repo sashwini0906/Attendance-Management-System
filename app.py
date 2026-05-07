@@ -83,20 +83,19 @@ try:
 
     db.commit()
 
+    cursor.execute("DELETE FROM admin")
+    db.commit()
+
     hashed_admin_password = generate_password_hash("admin123")
 
-    cursor.execute("""
-    INSERT INTO admin (username, password)
-    SELECT * FROM (
-        SELECT 'admin', %s
-    ) AS tmp
-    WHERE NOT EXISTS (
-        SELECT username FROM admin WHERE username='admin'
-    )
-    LIMIT 1
-    """, (hashed_admin_password,))
+    cursor.execute(
+    "INSERT INTO admin (username, password) VALUES (%s, %s)",
+    ("admin", hashed_admin_password)
+)
 
     db.commit()
+
+    print("✅ Admin recreated")
 
 except Exception as e:
     print("❌ Database connection failed:", e)
